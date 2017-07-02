@@ -1,0 +1,114 @@
+Eventlog Examples (EVTX)
+
+***4624***
+0,0<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event"><System><Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}"></Provider>
+0,1<EventID Qualifiers="">4624</EventID>
+0,2.text<Version>0</Version>
+0,3<Level>0</Level>
+0,4<Task>12544</Task>
+0,5<Opcode>0</Opcode>
+0,6<Keywords>0x80200000000000</Keywords>
+*0,7*<TimeCreated SystemTime="2017-06-07 04:11:35.232422"></TimeCreated>
+0,8<EventRecordID>71</EventRecordID>
+*0,9*<Correlation ActivityID="" RelatedActivityID=""></Correlation>
+*0,10*<Execution ProcessID="440" ThreadID="496"></Execution>
+0,11<Channel>Security</Channel>
+0,12<Computer>WIN-CPEE8D2K88A</Computer>
+*0,13*<Security UserID=""></Security>
+</System>
+1,0<EventData><Data Name="SubjectUserSid">S-1-5-18</Data>
+1,1Data Name="SubjectUserName">WIN-CPEE8D2K88A$</Data>
+1,2<Data Name="SubjectDomainName">WORKGROUP</Data>
+1,3<Data Name="SubjectLogonId">0x00000000000003</Data>
+1,4<Data Name="TargetUserSid">S-1-5-18</Data>
+1,5<Data Name="TargetUserName">SYSTEM</Data>
+1,6<Data Name="TargetDomainName">NT AUTHORITY</Data>
+1,7<Data Name="TargetLogonId">0x00000000000003</Data>
+1,8<Data Name="LogonType">5</Data>
+1,9<Data Name="LogonProcessName">Advapi  </Data>
+1,10<Data Name="AuthenticationPackageName">Negotiate</Data>
+1,11<Data Name="WorkstationName"></Data>
+1,12<Data Name="LogonGuid">{00000000-0000-0000-0000-000000000000}</Data>
+1,13<Data Name="TransmittedServices">-</Data>
+1,14<Data Name="LmPackageName">-</Data>
+1,15<Data Name="KeyLength">0</Data>
+1,16<Data Name="ProcessId">0x00000000000001</Data>
+1,17Data Name="ProcessName">C:\Windows\System32\services.exe</Data>
+1,18<Data Name="IpAddress">-</Data>
+1,19<Data Name="IpPort">-</Data>
+</EventData>
+</Event>
+
+***4625***
+0,0<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event"><System><Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}"></Provider>
+0,1<EventID Qualifiers="">4625</EventID>
+0,2<Version>0</Version>
+0,3<Level>0</Level>
+0,4<Task>12546</Task>
+0,5<Opcode>0</Opcode>
+0,6<Keywords>0x80100000000000</Keywords>
+*0,7*<TimeCreated SystemTime="2017-06-14 13:14:44.753536"></TimeCreated>
+0,8<EventRecordID>673914578</EventRecordID>
+*0,9*<Correlation ActivityID="" RelatedActivityID=""></Correlation>
+*0,10*<Execution ProcessID="648" ThreadID="6832"></Execution>
+0,11<Channel>Security</Channel>
+0,12<Computer>USDC1PADFS11.ent.bhpbilliton.net</Computer>
+*0,13*<Security UserID=""></Security>
+</System>
+1,0<EventData><Data Name="SubjectUserSid">S-1-5-21-1427962766-63821886-607533713-77755</Data>
+1,1<Data Name="SubjectUserName">_SVC-ADFS-PROD-02</Data>
+1,2<Data Name="SubjectDomainName">ENT</Data>
+1,3<Data Name="SubjectLogonId">0x0000000000126d</Data>
+1,4<Data Name="TargetUserSid">S-1-0-0</Data>
+1,5<Data Name="TargetUserName">esther.ong@bhpbilliton.com</Data>
+1,6<Data Name="TargetDomainName"></Data>
+1,7<Data Name="Status">0xc00002</Data>
+1,8<Data Name="FailureReason">%%2307</Data>
+1,9<Data Name="SubStatus">0x000000</Data>
+1,10<Data Name="LogonType">3</Data>
+1,11<Data Name="LogonProcessName">W</Data>
+1,12<Data Name="AuthenticationPackageName">Negotiate</Data>
+1,13<Data Name="WorkstationName">USDC1PADFS11</Data>
+1,14<Data Name="TransmittedServices">-</Data>
+1,15<Data Name="LmPackageName">-</Data>
+1,16<Data Name="KeyLength">0</Data>
+1,17<Data Name="ProcessId">0x00000000000008</Data>
+1,18<Data Name="ProcessName">C:\Windows\ADFS\Microsoft.IdentityServer.ServiceHost.exe</Data>
+1,19<Data Name="IpAddress">-</Data>
+1,20<Data Name="IpPort">-</Data>
+</EventData>
+</Event>
+
+***4672***
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event"><System><Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}"></Provider>
+0,1<EventID Qualifiers="">4672</EventID>
+0,2<Version>0</Version>
+0,3<Level>0</Level>
+0,4<Task>12548</Task>
+0,5<Opcode>0</Opcode>
+0,6<Keywords>0x80200000000000</Keywords>
+*0,7*<TimeCreated SystemTime="2017-06-07 04:06:26.890625"></TimeCreated>
+0,8<EventRecordID>22</EventRecordID>
+*0,9*<Correlation ActivityID="" RelatedActivityID=""></Correlation>
+*0,10*<Execution ProcessID="436" ThreadID="768"></Execution>
+0,11<Channel>Security</Channel>
+0,12<Computer>WIN-CPEE8D2K88A</Computer>
+*0,13*<Security UserID=""></Security>
+</System>
+1,0<EventData><Data Name="SubjectUserSid">S-1-5-18</Data>
+1,1<Data Name="SubjectUserName">SYSTEM</Data>
+1,2<Data Name="SubjectDomainName">NT AUTHORITY</Data>
+1,3<Data Name="SubjectLogonId">0x00000000000003</Data>
+1,4<Data Name="PrivilegeList">SeAssignPrimaryTokenPrivilege
+            SeTcbPrivilege
+            SeSecurityPrivilege
+            SeTakeOwnershipPrivilege
+            SeLoadDriverPrivilege
+            SeBackupPrivilege
+            SeRestorePrivilege
+            SeDebugPrivilege
+            SeAuditPrivilege
+            SeSystemEnvironmentPrivilege
+            SeImpersonatePrivilege</Data>
+</EventData>
+</Event>
