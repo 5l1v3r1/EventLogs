@@ -31,6 +31,6 @@
 		
 
 
-3. bulk_evtx_search.py - A tool to search for keywords in large repositories of windows event log files (evtx) where standard review may be tedious. Output in evtx xml format, multiprocessing capable to optimise speed
+3. bulk_evtx_search.py - A tool to search for keywords in large repositories of windows event log files (evtx) where standard review may be tedious. On search hit, output event record in Evtx xml format to outfile, multiprocessing capable to optimise speed
 	
 	$ python bulk_evtx_search.py -s "<search,strings,comma,delimited>" <input/folder> <output/file.path>
