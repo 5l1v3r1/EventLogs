@@ -55,23 +55,23 @@ def processSysmon(args):
                 parent_command_line = root[1][15].text  # ParentCommandLine
 
                 out_line = (
-                	time_in_utc
-                	+ ",eid=" + event_id
-                	+ ",p_guid="  + process_guid
-                	+ ",pid=" + process_id
-                	+ ",image=" + image
-                	+ ",cli=" + command_line
-                	+ ",dir=" + current_directory
-                	+ ",user=" + user
-                	+ ",logonguid=" + logon_guid
-                	+ ",logonid=" + logon_id
-                	+ ",terminalsession=" + terminal_session_id
-                	+ ",integrity=" + integrity_level
-                	+ "," + hashes
-                	+ ",pp_guid=" + parent_process_guid
-                	+ ",ppid=" + parent_process_id
-                	+ ",pimage=" + parent_image
-                	+ ",pcli=" + parent_command_line
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid="  + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
+                    + ",cli=" + command_line
+                    + ",dir=" + current_directory
+                    + ",user=" + user
+                    + ",logonguid=" + logon_guid
+                    + ",logonid=" + logon_id
+                    + ",terminalsession=" + terminal_session_id
+                    + ",integrity=" + integrity_level
+                    + "," + hashes
+                    + ",ppguid=" + parent_process_guid
+                    + ",ppid=" + parent_process_id
+                    + ",pimage=" + parent_image
+                    + ",pcli=" + parent_command_line
                 )
 
             # Network events
@@ -98,23 +98,23 @@ def processSysmon(args):
                 dest_port_name      = root[1][18].text
 
                 out_line = (
-                	time_in_utc
-                	+ ",eid=" + event_id
-                	+ ",p_guid="  + process_guid
-                	+ ",pid=" + process_id
-                	+ ",image=" + image
-                	+ ",user=" + user
-                	+ ",protocol=" + protocol
-            	    + ",init=" + initiated
-                	+ ",src_hostname=" + source_hostname
-	                + ",src_ip=" + source_ip
-    	            + ",src_port=" + source_port
-        	        + ",src_port_name=" + source_port_name
-            	    + ",dest_hostname=" + dest_hostname
-	                + ",dest_ip=" + dest_ip
-    	            + ",dest_port=" + dest_port
-        	        + ",dest_port_name=" + dest_port_name
-        	    )
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid="  + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
+                    + ",user=" + user
+                    + ",protocol=" + protocol
+                    + ",init=" + initiated
+                    + ",src_hostname=" + source_hostname
+                    + ",src_ip=" + source_ip
+                    + ",src_port=" + source_port
+                    + ",src_port_name=" + source_port_name
+                    + ",dest_hostname=" + dest_hostname
+                    + ",dest_ip=" + dest_ip
+                    + ",dest_port=" + dest_port
+                    + ",dest_port_name=" + dest_port_name
+                )
 
             # Sysmon Service State Change
             elif root[0][1].text == "4":
@@ -126,10 +126,10 @@ def processSysmon(args):
                 schema_version      = root[1][2].text
 
                 out_line = (
-                	time_in_utc
-                	+ "," + event_id
-                	+ ",state=" + state
-                	+ ",schema=" + schema_version
+                    time_in_utc
+                    + "," + event_id
+                    + ",state=" + state
+                    + ",schema=" + schema_version
                 )
 
             # Process end event
@@ -143,11 +143,11 @@ def processSysmon(args):
                 image               = root[1][3].text  # Image
 
                 out_line = (
-                	time_in_utc
-					+ ",eid=" + event_id
-                	+ ",p_guid="  + process_guid
-        	        + ",pid=" + process_id
-            	    + ",image=" + image
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid="  + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
             	)
 
             # Driver load events
@@ -162,12 +162,12 @@ def processSysmon(args):
                 signiture           = root[1][4].text  # Signiture
 
                 out_line = (
-                	time_in_utc
-	                + ",eid=" + event_id
-    	            + ",driver=" + image_loaded
-        	        + "," + hashes
-            	    + ",signed=" + signed
-                	+ ",signiture=" + signiture
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",driver=" + image_loaded
+                    + "," + hashes
+                    + ",signed=" + signed
+                    + ",signiture=" + signiture
                 )
 
             # File create events
@@ -183,13 +183,13 @@ def processSysmon(args):
                 creation_time_utc   = root[1][5].text
 
                 out_line = (
-                	time_in_utc
-    	            + ",eid=" + event_id
-	                + ",p_guid="  + process_guid
-        	        + ",pid=" + process_id
-            	    + ",image=" + image
-                	+ ",filename=" + target_filename
-	                + ",creationUTC=" + creation_time_utc
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid="  + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
+                    + ",filename=" + target_filename
+                    + ",creationUTC=" + creation_time_utc
 	            )
 
             # RegistryEvent - Registry object added or deleted
@@ -205,13 +205,13 @@ def processSysmon(args):
                 target_object       = root[1][5].text  # Target object
 
                 out_line = (
-                	time_in_utc
-	                + ",eid=" + event_id
-	                + ",p_guid="  + process_guid
-    	            + ",pid=" + process_id
-        	        + ",image=" + image
-            	    + ",type=" + event_type
-                	+ ",object=" + target_object
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid="  + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
+                    + ",type=" + event_type
+                    + ",object=" + target_object
 	            )
 
             # RegistryEvent - Registry value set
@@ -228,14 +228,14 @@ def processSysmon(args):
                 details             = root[1][5].text
 
                 out_line = (
-                	time_in_utc
-	                + ",eid=" + event_id
-    	            + ",p_guid=" + process_guid
-        	        + ",pid=" + process_id
-            	    + ",image=" + image
-                	+ ",type=" + event_type
-	                + ",object=" + target_object
-    	            + ",details=" + details
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",pguid=" + process_guid
+                    + ",pid=" + process_id
+                    + ",image=" + image
+                    + ",type=" + event_type
+                    + ",object=" + target_object
+                    + ",details=" + details
     	        )
 
             elif root[0][1].text == "16":
@@ -247,10 +247,10 @@ def processSysmon(args):
                 config_file_hash    = str(root[1][2].text)
 
                 out_line = (
-                	time_in_utc
-	                + ",eid=" + event_id
-    	            + ",config=" + configuration
-        	        + "," + config_file_hash
+                    time_in_utc
+                    + ",eid=" + event_id
+                    + ",config=" + configuration
+                    + "," + config_file_hash
         	    )
 
             else:
@@ -260,8 +260,8 @@ def processSysmon(args):
                 time_in_utc         = root[1][0].text  # UTC Time
 
                 out_line = (
-                	"NonParsed - sysmon updated? " + time_in_utc
-                	+ "," + event_id + "," + event_record_id + "," + hostname
+                    "NonParsed - sysmon updated? " + time_in_utc
+                    + "," + event_id + "," + event_record_id + "," + hostname
 	            )
 
             print out_line
