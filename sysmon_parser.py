@@ -2,64 +2,84 @@
 '''
 Name: sysmon_parser.py
 Author: Matthew Green - @mgreen27
-Version: 1.0
-License: Creative Commons Attribution 4.0 | You may privatize, fork, edit, teach, publish, or deploy for commercial use - with attribution in the text.
+Version: 1.01, Python 2.7
+License: Creative Commons Attribution 4.0 | You may privatize, fork, edit,
+ teach, publish, or deploy for commercial use - with attribution in the text.
 
-Description: 
+Description:
 A quick tool to parse collected sysmon logs for easy analysis. Sysmon 6.02
-Write to CSV and enable grep of items of interest and Process GUIDs
-Typical workflow would enable visability on process, all child processes, registry and file activty.
+Write to CSV and enable grep of items of interest and Process GUIDs. Typical
+ workflow would enable visability on process, all child processes, registry
+ and file activty.
 
 Simple to follow format to add additional Sysmon event types.
 
 Requirements:
-Python-evtx, pip install python-evtx
+ Python-evtx, pip install python-evtx
 
 Instructions:
 $ python sysmon_parser.py /location/to/sysmon.evtx > /location/to.output.csv
 '''
 
-# initialisation
 from lxml import etree
 import Evtx.Evtx as evtx
 import Evtx.Views as e_views
 
-# Function to parse Sysmon events into XML and output a line based on preconfigured preferences. Not all EventID variables are included in the output line, however they are included in the script to allow customisation.
+
+# Function to parse Sysmon events into csv format
 def processSysmon(args):
     with evtx.Evtx(args.evtx) as log:
         for record in log.records():
-            root = etree.fromstring(record.xml())           
-            
+            root = etree.fromstring(record.xml())
+
             # Process Create events
             if root[0][1].text == "1":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                time_in_utc         = root[1][0].text # UTC Time
-                process_guid        = root[1][1].text # Process GUID
-                process_id          = root[1][2].text # Process ID
-                image               = root[1][3].text # Image
-                command_line        = root[1][4].text # Command Line
-                current_directory   = root[1][5].text # Current Directory
-                user                = root[1][6].text # User
-                logon_guid          = root[1][7].text # LogonGuid
-                logon_id            = root[1][8].text # LogonId
-                terminal_session_id = root[1][9].text # TerminalSessionId
-                integrity_level     = root[1][10].text # IntegrityLevel
-                hashes              = root[1][11].text # Hashes
-                parent_process_guid = root[1][12].text # ParentProcessGuid
-                parent_process_id   = root[1][13].text # ParentProcessId
-                parent_image        = root[1][14].text # ParentImage
-                parent_command_line = root[1][15].text # ParentCommandLine
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
+                process_guid        = root[1][1].text  # Process GUID
+                process_id          = root[1][2].text  # Process ID
+                image               = root[1][3].text  # Image
+                command_line        = root[1][4].text  # Command Line
+                current_directory   = root[1][5].text  # Current Directory
+                user                = root[1][6].text  # User
+                logon_guid          = root[1][7].text  # LogonGuid
+                logon_id            = root[1][8].text  # LogonId
+                terminal_session_id = root[1][9].text  # TerminalSessionId
+                integrity_level     = root[1][10].text  # IntegrityLevel
+                hashes              = root[1][11].text  # Hashes
+                parent_process_guid = root[1][12].text  # ParentProcessGuid
+                parent_process_id   = root[1][13].text  # ParentProcessId
+                parent_image        = root[1][14].text  # ParentImage
+                parent_command_line = root[1][15].text  # ParentCommandLine
 
-                out_line = "key="  + process_guid + time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image + ",cli=" + command_line + ",dir=" + current_directory + ",user=" + user + ",logonguid=" + logon_guid + ",logonid=" + logon_id + ",terminalsession=" + terminal_session_id + ",integrity=" + integrity_level + "," + hashes + ",key2=" + parent_process_guid + ",ppid=" + parent_process_id + ",pimage=" + parent_image + ",pcli=" + parent_command_line
+                out_line = (
+                	time_in_utc
+                	+ ",eid=" + event_id
+                	+ ",p_guid="  + process_guid
+                	+ ",pid=" + process_id
+                	+ ",image=" + image
+                	+ ",cli=" + command_line
+                	+ ",dir=" + current_directory
+                	+ ",user=" + user
+                	+ ",logonguid=" + logon_guid
+                	+ ",logonid=" + logon_id
+                	+ ",terminalsession=" + terminal_session_id
+                	+ ",integrity=" + integrity_level
+                	+ "," + hashes
+                	+ ",pp_guid=" + parent_process_guid
+                	+ ",ppid=" + parent_process_id
+                	+ ",pimage=" + parent_image
+                	+ ",pcli=" + parent_command_line
+                )
 
             # Network events
-            elif root[0][1].text == "3":    
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                time_in_utc         = root[1][0].text # UTC Time
+            elif root[0][1].text == "3":
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
                 process_guid        = root[1][1].text
                 process_id          = root[1][2].text
                 image               = root[1][3].text
@@ -77,106 +97,173 @@ def processSysmon(args):
                 dest_port           = root[1][17].text
                 dest_port_name      = root[1][18].text
 
-                out_line = "key="  + process_guid + time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image + ",user=" + user + ",protocol=" + protocol + ",init=" + initiated + ",src_hostname=" + source_hostname + ",src_ip=" + source_ip + ",src_port=" + source_port + ",src_port_name=" + source_port_name + ",dest_hostname=" + dest_hostname + ",dest_ip=" + dest_ip + ",dest_port=" + dest_port + ",dest_port_name=" + dest_port_name            
+                out_line = (
+                	time_in_utc
+                	+ ",eid=" + event_id
+                	+ ",p_guid="  + process_guid
+                	+ ",pid=" + process_id
+                	+ ",image=" + image
+                	+ ",user=" + user
+                	+ ",protocol=" + protocol
+            	    + ",init=" + initiated
+                	+ ",src_hostname=" + source_hostname
+	                + ",src_ip=" + source_ip
+    	            + ",src_port=" + source_port
+        	        + ",src_port_name=" + source_port_name
+            	    + ",dest_hostname=" + dest_hostname
+	                + ",dest_ip=" + dest_ip
+    	            + ",dest_port=" + dest_port
+        	        + ",dest_port_name=" + dest_port_name
+        	    )
 
             # Sysmon Service State Change
-            elif root[0][1].text == "4":    
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                time_in_utc         = root[1][0].text # UTC Time
+            elif root[0][1].text == "4":
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
                 state               = root[1][1].text
                 schema_version      = root[1][2].text
-            
-                out_line = time_in_utc + "," + event_id + ",state=" + state + ",schema=" + schema_version
+
+                out_line = (
+                	time_in_utc
+                	+ "," + event_id
+                	+ ",state=" + state
+                	+ ",schema=" + schema_version
+                )
 
             # Process end event
-            elif root[0][1].text == "5":    
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                time_in_utc         = root[1][0].text # UTC Time
-                process_guid        = root[1][1].text # Process GUID
-                process_id          = root[1][2].text # Process ID
-                image               = root[1][3].text # Image
+            elif root[0][1].text == "5":
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
+                process_guid        = root[1][1].text  # Process GUID
+                process_id          = root[1][2].text  # Process ID
+                image               = root[1][3].text  # Image
 
-                out_line = "key=" + process_guid + time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image
+                out_line = (
+                	time_in_utc
+					+ ",eid=" + event_id
+                	+ ",p_guid="  + process_guid
+        	        + ",pid=" + process_id
+            	    + ",image=" + image
+            	)
 
             # Driver load events
             elif root[0][1].text == "6":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname 
-                time_in_utc         = root[1][0].text # UTC Time
-                image_loaded        = root[1][1].text # ImageLoaded 
-                hashes              = root[1][2].text # Hashes
-                signed              = root[1][3].text # isSigned 
-                signiture           = root[1][4].text # Signiture
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
+                image_loaded        = root[1][1].text  # ImageLoaded
+                hashes              = root[1][2].text  # Hashes
+                signed              = root[1][3].text  # isSigned
+                signiture           = root[1][4].text  # Signiture
 
-                out_line = time_in_utc + ",eid=" + event_id + ",driver=" + image_loaded + "," + hashes + ",signed=" + signed + ",signiture=" + signiture
+                out_line = (
+                	time_in_utc
+	                + ",eid=" + event_id
+    	            + ",driver=" + image_loaded
+        	        + "," + hashes
+            	    + ",signed=" + signed
+                	+ ",signiture=" + signiture
+                )
 
             # File create events
             elif root[0][1].text == "11":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname 
-                time_in_utc         = root[1][0].text # UTC Time
-                process_guid        = root[1][1].text # Process GUID
-                process_id          = root[1][2].text # Process ID
-                image               = root[1][3].text # Image
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
+                process_guid        = root[1][1].text  # Process GUID
+                process_id          = root[1][2].text  # Process ID
+                image               = root[1][3].text  # Image
                 target_filename     = root[1][4].text
                 creation_time_utc   = root[1][5].text
-                                
-                out_line = "key="  + process_guid + time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image + ",filename=" + target_filename + ",creationUTC=" + creation_time_utc
+
+                out_line = (
+                	time_in_utc
+    	            + ",eid=" + event_id
+	                + ",p_guid="  + process_guid
+        	        + ",pid=" + process_id
+            	    + ",image=" + image
+                	+ ",filename=" + target_filename
+	                + ",creationUTC=" + creation_time_utc
+	            )
 
             # RegistryEvent - Registry object added or deleted
             elif root[0][1].text == "12":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                event_type          = root[1][0].text # Registry event type 
-                time_in_utc         = root[1][1].text # UTC Time
-                process_guid        = root[1][2].text # Process GUID
-                process_id          = root[1][3].text # Process ID
-                image               = root[1][4].text # Image
-                target_object       = root[1][5].text # Target object
-                                
-                out_line = time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image + ",type=" + event_type + ", object=" + target_object + ",key="  + process_guid
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                event_type          = root[1][0].text  # Registry event type
+                time_in_utc         = root[1][1].text  # UTC Time
+                process_guid        = root[1][2].text  # Process GUID
+                process_id          = root[1][3].text  # Process ID
+                image               = root[1][4].text  # Image
+                target_object       = root[1][5].text  # Target object
+
+                out_line = (
+                	time_in_utc
+	                + ",eid=" + event_id
+	                + ",p_guid="  + process_guid
+    	            + ",pid=" + process_id
+        	        + ",image=" + image
+            	    + ",type=" + event_type
+                	+ ",object=" + target_object
+	            )
 
             # RegistryEvent - Registry value set
             elif root[0][1].text == "13":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                event_type          = root[1][0].text # Registry event type 
-                time_in_utc         = root[1][1].text # UTC Time
-                process_guid        = root[1][2].text # Process GUID
-                process_id          = root[1][3].text # Process ID
-                image               = root[1][4].text # Image
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                event_type          = root[1][0].text  # Registry event type
+                time_in_utc         = root[1][1].text  # UTC Time
+                process_guid        = root[1][2].text  # Process GUID
+                process_id          = root[1][3].text  # Process ID
+                image               = root[1][4].text  # Image
                 target_object       = root[1][5].text
                 details             = root[1][5].text
-                                
-                out_line = "key=" + process_guid + time_in_utc + ",eid=" + event_id + ",pid=" + process_id + ",image=" + image + ",type=" + event_type + ", object=" + target_object + ",details=" + details
 
+                out_line = (
+                	time_in_utc
+	                + ",eid=" + event_id
+    	            + ",p_guid=" + process_guid
+        	        + ",pid=" + process_id
+            	    + ",image=" + image
+                	+ ",type=" + event_type
+	                + ",object=" + target_object
+    	            + ",details=" + details
+    	        )
 
             elif root[0][1].text == "16":
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
                 time_in_utc         = root[1][0].text
                 configuration       = root[1][1].text
-                config_file_hash    = root[1][2].text
+                config_file_hash    = str(root[1][2].text)
 
-                out_line = time_in_utc + ",eid=" + event_id + ",config=" + configuration  + "," + config_file_hash
+                out_line = (
+                	time_in_utc
+	                + ",eid=" + event_id
+    	            + ",config=" + configuration
+        	        + "," + config_file_hash
+        	    )
 
+            else:
+                event_id            = root[0][1].text  # EventID
+                event_record_id     = root[0][8].text  # EventRecordID
+                hostname            = root[0][12].text  # hostname
+                time_in_utc         = root[1][0].text  # UTC Time
 
-            else:    
-                event_id            = root[0][1].text # EventID
-                event_record_id     = root[0][8].text # EventRecordID
-                hostname            = root[0][12].text # hostname
-                time_in_utc         = root[1][0].text # UTC Time
-                out_line = "NonParsed - sysmon updated? " + event_id + "," + event_record_id + "," + hostname + "," + time_in_utc
-            
+                out_line = (
+                	"NonParsed - sysmon updated? " + time_in_utc
+                	+ "," + event_id + "," + event_record_id + "," + hostname
+	            )
+
             print out_line
 
 
@@ -184,12 +271,12 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Dump a binary EVTX file into XML.")
+        description="Parse a Sysmon EVTX file into csv for analysis")
     parser.add_argument("evtx", type=str,
-                    help="Path to the Windows EVTX event log file")
+        help="Path to the Sysmon EVTX event log file")
     args = parser.parse_args()
 
     processSysmon(args)
-           
+
 if __name__ == "__main__":
     main()
