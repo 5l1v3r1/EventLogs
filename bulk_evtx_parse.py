@@ -2,13 +2,17 @@
 '''
 Name: bulk_evtx_parse.py
 Author: Matthew Green - @mgreen27
-Version: 1.0
-License: Creative Commons Attribution 4.0 | You may privatize, fork, edit, teach, publish, or deploy for commercial use - with attribution in the text.
+Version: 1.01, Python 2.7
+License: Creative Commons Attribution 4.0 | You may privatize, fork, edit,
+ teach, publish, or deploy for commercial use - with attribution in the text.
 
 Description: 
-    Script to carve and parse certain EventIDs (currently supporting 4624,4625,4672) in large repositories of windows event log files where standard review may be tedious. 
-    The script will turn requested EventIDs into csv files for review in excel or ingestion into Elastic|Splunk.
-    Included multiprocess capabilities so try to run on a machine with lots of cores for faster processing.
+    Script to carve and parse certain EventIDs (currently supporting
+    4624,4625,4672) in large repositories of windows event log files
+    where standard review may be tedious. The script will turn requested
+    EventIDs into csv files for review in excel or ingestion into
+    Elastic|Splunk. Included multiprocess capabilities so try to run
+    on a machine with lots of cores for faster processing.
 
 Requirements:
     Python-evtx, pip install python-evtx
@@ -141,6 +145,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
