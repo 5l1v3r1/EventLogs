@@ -37,3 +37,8 @@
 
 
 
+
+
+4. Powershell Sysmon templates - Sysmon event log parser (last used for version 5.02)
+	Get-SysmonProcess.ps1 - Process events
+	Get-SysmonNetwork.ps1 - network events
