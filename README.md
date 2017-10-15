@@ -37,3 +37,7 @@
 
 
 
+
+
+
+4. Powershell Sysmon parser templates for Process and Network events (last used for version 5.02)
